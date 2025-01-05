@@ -2,16 +2,50 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <title>{% block title %}Nicolas's Portfolio{% endblock %}</title>
         {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <link rel="stylesheet" href="/css/styles.css">
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="{{ path('index') }}" 
+                        class="{{ app.request.attributes.get('_route') == 'index' ? 'active' : '' }}">
+                        Accueil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('section_about') }}" 
+                        class="{{ app.request.attributes.get('_route') == 'section_about' ? 'active' : '' }}">
+                        À propos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('section_projects') }}" 
+                        class="{{ app.request.attributes.get('_route') == 'section_projects' ? 'active' : '' }}">
+                        Projets
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('section_education') }}" 
+                        class="{{ app.request.attributes.get('_route') == 'section_education' ? 'active' : '' }}">
+                        Formations
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>            
+            {% block content %}{% endblock %}
+        </main>
+
+        {% block footer %}
+            <footer>
+                <p>&copy; 2025 Nicolas Berlaud</p>
+            </footer>
+        {% endblock %}
     </body>
 </html>
