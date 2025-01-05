@@ -13,11 +13,11 @@
 
         <h1>Meet Nicolas Berlaud</h1>
 
-        {% import 'cards_macros.html.twig' as cards %}
+        {% import 'card/cards_macros.html.twig' as card %}
 
-        {{ cards.section_card('À propos de moi', 'Qui suis-je ?') }}
-        {{ cards.section_card('Projets', 'Qu\'ai-je fais ?') }}
-        {{ cards.section_card('Formations', 'Où ai-je appris ?') }}
+        {{ card.section_card('À propos de moi', 'Qui suis-je ?', 'section_about') }}
+        {{ card.section_card('Projets', 'Qu\'ai-je fais ?', 'section_projects') }}
+        {{ card.section_card('Formations', 'Où ai-je appris ?', 'section_education') }}
 
     </head>
     <body>
