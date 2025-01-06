@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -27,10 +30,15 @@ class Project
     private ?string $screenshot = null;
 
     #[ORM\ManyToMany(targetEntity: Technology::class, inversedBy: 'projects')]
-    private $technologies;
-
+    private Collection $technologies;
+    
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'projects')]
     private ?User $user = null;
+
+    public function __construct()
+    {
+        $this->technologies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -81,9 +89,25 @@ class Project
         return $this;
     }
 
-    public function getTechnologies(): ?array
+    public function getTechnologies(): Collection
     {
         return $this->technologies;
+    }
+
+    public function addTechnology(Technology $technology): self
+    {
+        if (!$this->technologies->contains($technology)) {
+            $this->technologies->add($technology);
+        }
+
+        return $this;
+    }
+
+    public function removeTechnology(Technology $technology): self
+    {
+        $this->technologies->removeElement($technology);
+
+        return $this;
     }
 
     public function setTechnologies($technologies): static
