@@ -1,0 +1,29 @@
+html{
+    font-size: 22px;
+    font-family: 'Inter';
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+    line-height: 1.6;
+    letter-spacing: 0rem;
+    background-color: var(--eerie-black);
+    color: var(--mint-cream);
+}
+*{
+    box-sizing: border-box;
+}
+h1,h2,h3,h4,p,ul,ol{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    font-weight: 300;
+}
+a{
+    text-decoration: none;
+}
+button, input{
+    padding: 0;
+    background: none;
+    border: 0;
+}

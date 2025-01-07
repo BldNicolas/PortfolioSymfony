@@ -17,7 +17,7 @@ class PortfolioController extends AbstractController
     #[Route(path: '/about', name: 'section_about')]
     public function about(): Response
     {
-        return $this->render('section/about.html.twig');
+        return $this->render('about/about.html.twig');
     }
 
     #[Route(path: '/education', name: 'section_education')]

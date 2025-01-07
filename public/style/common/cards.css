@@ -1,0 +1,6 @@
+.section-card{
+    display: flex;
+    background-color: var(--mint-cream);
+    color: var(--dark-slate-grey);
+    flex-direction: column;
+}

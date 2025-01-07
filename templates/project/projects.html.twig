@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProjectController!{% endblock %}
+
+{% block header %}
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ path('index') }}" 
+                    class="{{ app.request.attributes.get('_route') == 'index' ? 'active' : '' }}">
+                    Accueil
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('section_about') }}" 
+                    class="{{ app.request.attributes.get('_route') == 'section_about' ? 'active' : '' }}">
+                    À propos
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('projects') }}" 
+                    class="{{ app.request.attributes.get('_route') == 'projects' ? 'active' : '' }}">
+                    Projets
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('section_education') }}" 
+                    class="{{ app.request.attributes.get('_route') == 'section_education' ? 'active' : '' }}">
+                    Formations
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <h1>Projects</h1>
+
+    <a href="{{ path('project_create') }}">Create a new project</a>
+
+    <ul>
+        {% for project in projects %}
+            <li>
+                <h2>{{ project.title }}</h2>
+                <p>{{ project.description }}</p>
+                <a href="{{ path('project_edit', {'id': project.id}) }}">Edit</a>
+                <form action="{{ path('project_delete', {'id': project.id}) }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
