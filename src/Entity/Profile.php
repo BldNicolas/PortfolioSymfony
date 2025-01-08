@@ -40,9 +40,16 @@ class Profile
     #[ORM\OneToMany(targetEntity: ProfileSection::class, mappedBy: 'profile')]
     private Collection $profileSections;
 
+    /**
+     * @var Collection<int, Project>
+     */
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'profile')]
+    private Collection $projects;
+
     public function __construct()
     {
         $this->profileSections = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +153,36 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($profileSection->getProfile() === $this) {
                 $profileSection->setProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): static
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+            $project->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): static
+    {
+        if ($this->projects->removeElement($project)) {
+            // set the owning side to null (unless already changed)
+            if ($project->getProfile() === $this) {
+                $project->setProfile(null);
             }
         }
 
