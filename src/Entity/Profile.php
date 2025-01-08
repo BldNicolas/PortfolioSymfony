@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,17 @@ class Profile
 
     #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
     private ?User $userProfile = null;
+
+    /**
+     * @var Collection<int, ProfileSection>
+     */
+    #[ORM\OneToMany(targetEntity: ProfileSection::class, mappedBy: 'profile')]
+    private Collection $profileSections;
+
+    public function __construct()
+    {
+        $this->profileSections = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +118,36 @@ class Profile
     public function setUserProfile(?User $userProfile): static
     {
         $this->userProfile = $userProfile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProfileSection>
+     */
+    public function getProfileSections(): Collection
+    {
+        return $this->profileSections;
+    }
+
+    public function addProfileSection(ProfileSection $profileSection): static
+    {
+        if (!$this->profileSections->contains($profileSection)) {
+            $this->profileSections->add($profileSection);
+            $profileSection->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfileSection(ProfileSection $profileSection): static
+    {
+        if ($this->profileSections->removeElement($profileSection)) {
+            // set the owning side to null (unless already changed)
+            if ($profileSection->getProfile() === $this) {
+                $profileSection->setProfile(null);
+            }
+        }
 
         return $this;
     }
