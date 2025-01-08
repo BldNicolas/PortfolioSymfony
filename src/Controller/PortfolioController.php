@@ -67,6 +67,14 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/experience', name: 'app_portfolio_experience_show', methods: ['GET'])]
+    public function showExperience(Portfolio $portfolio): Response
+    {
+        return $this->render('experience/show.html.twig',[
+            'experiences' => $portfolio->getExperiences(),
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_portfolio_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Portfolio $portfolio, EntityManagerInterface $entityManager): Response
     {
