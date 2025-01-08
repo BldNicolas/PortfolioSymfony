@@ -20,8 +20,8 @@ class Project
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    private ?array $technologies = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $technologies = null;
 
     #[ORM\Column]
     private ?int $duration = null;
@@ -61,12 +61,12 @@ class Project
         return $this;
     }
 
-    public function getTechnologies(): ?array
+    public function getTechnologies(): ?string
     {
         return $this->technologies;
     }
 
-    public function setTechnologies(?array $technologies): static
+    public function setTechnologies(?string $technologies): static
     {
         $this->technologies = $technologies;
 
