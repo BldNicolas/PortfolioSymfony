@@ -6,11 +6,15 @@
     <div>
         <h1>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</h1>
     </div>
-    
+
     <div>
-        <a href="{{ path('app_portfolio_about_show', {'id': portfolio.about.id}) }}">
+        <a href="{{ path('app_portfolio_about_show', {'id': portfolio.id}) }}">
             <h2>À propos de moi</h2>
             <h3>Qui suis-je ?</h3>
+        </a>
+        <a href="{{ path('app_portfolio_project_show', {'id': portfolio.id}) }}">
+            <h2>Projets</h2>
+            <h3>Qu'ai-je fais ?</h3>
         </a>
     </div>
 {% endblock %}
