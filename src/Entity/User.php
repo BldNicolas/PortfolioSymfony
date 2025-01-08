@@ -32,8 +32,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToOne(mappedBy: 'userProfile', cascade: ['persist', 'remove'])]
-    private ?Profile $profile = null;
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    private ?Portfolio $portfolio = null;
 
     public function getId(): ?int
     {
@@ -110,24 +110,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getProfile(): ?Profile
+    public function getPortfolio(): ?Portfolio
     {
-        return $this->profile;
+        return $this->portfolio;
     }
 
-    public function setProfile(?Profile $profile): static
+    public function setPortfolio(?Portfolio $portfolio): static
     {
         // unset the owning side of the relation if necessary
-        if ($profile === null && $this->profile !== null) {
-            $this->profile->setUserProfile(null);
+        if ($portfolio === null && $this->portfolio !== null) {
+            $this->portfolio->setOwner(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($profile !== null && $profile->getUserProfile() !== $this) {
-            $profile->setUserProfile($this);
+        if ($portfolio !== null && $portfolio->getOwner() !== $this) {
+            $portfolio->setOwner($this);
         }
 
-        $this->profile = $profile;
+        $this->portfolio = $portfolio;
 
         return $this;
     }

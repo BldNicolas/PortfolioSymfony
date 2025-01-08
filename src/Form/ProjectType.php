@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\profile;
+use App\Entity\Portfolio;
 use App\Entity\Project;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,8 +21,8 @@ class ProjectType extends AbstractType
             ->add('completedAt', null, [
                 'widget' => 'single_text',
             ])
-            ->add('profile', EntityType::class, [
-                'class' => profile::class,
+            ->add('portfolio', EntityType::class, [
+                'class' => Portfolio::class,
                 'choice_label' => 'id',
             ])
         ;

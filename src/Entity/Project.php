@@ -30,7 +30,7 @@ class Project
     private ?\DateTimeInterface $completedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
-    private ?profile $profile = null;
+    private ?Portfolio $portfolio = null;
 
     public function getId(): ?int
     {
@@ -97,14 +97,14 @@ class Project
         return $this;
     }
 
-    public function getProfile(): ?profile
+    public function getPortfolio(): ?Portfolio
     {
-        return $this->profile;
+        return $this->portfolio;
     }
 
-    public function setProfile(?profile $profile): static
+    public function setPortfolio(?Portfolio $portfolio): static
     {
-        $this->profile = $profile;
+        $this->portfolio = $portfolio;
 
         return $this;
     }

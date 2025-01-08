@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Experience;
-use App\Entity\profile;
+use App\Entity\Portfolio;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,8 +22,8 @@ class ExperienceType extends AbstractType
             ->add('endDate', null, [
                 'widget' => 'single_text',
             ])
-            ->add('profile', EntityType::class, [
-                'class' => profile::class,
+            ->add('portfolio', EntityType::class, [
+                'class' => Portfolio::class,
                 'choice_label' => 'id',
             ])
         ;

@@ -27,7 +27,7 @@ class Experience
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'experiences')]
-    private ?profile $profile = null;
+    private ?Portfolio $portfolio = null;
 
     public function getId(): ?int
     {
@@ -82,14 +82,14 @@ class Experience
         return $this;
     }
 
-    public function getProfile(): ?profile
+    public function getPortfolio(): ?Portfolio
     {
-        return $this->profile;
+        return $this->portfolio;
     }
 
-    public function setProfile(?profile $profile): static
+    public function setPortfolio(?Portfolio $portfolio): static
     {
-        $this->profile = $profile;
+        $this->portfolio = $portfolio;
 
         return $this;
     }

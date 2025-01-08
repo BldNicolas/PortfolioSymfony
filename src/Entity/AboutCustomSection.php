@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ProfileSectionRepository;
+use App\Repository\AboutCustomSectionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProfileSectionRepository::class)]
-class ProfileSection
+#[ORM\Entity(repositoryClass: AboutCustomSectionRepository::class)]
+class AboutCustomSection
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,8 +20,8 @@ class ProfileSection
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'profileSections')]
-    private ?profile $profile = null;
+    #[ORM\ManyToOne(inversedBy: 'aboutCustomSection')]
+    private ?Portfolio $portfolio = null;
 
     public function getId(): ?int
     {
@@ -52,14 +52,14 @@ class ProfileSection
         return $this;
     }
 
-    public function getProfile(): ?profile
+    public function getPortfolio(): ?Portfolio
     {
-        return $this->profile;
+        return $this->portfolio;
     }
 
-    public function setProfile(?profile $profile): static
+    public function setPortfolio(?Portfolio $portfolio): static
     {
-        $this->profile = $profile;
+        $this->portfolio = $portfolio;
 
         return $this;
     }
