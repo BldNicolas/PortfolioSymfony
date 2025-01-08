@@ -54,6 +54,7 @@ final class PortfolioController extends AbstractController
     public function showAbout(Portfolio $portfolio): Response
     {
         return $this->render('about/show.html.twig',[
+            'portfolio' => $portfolio,
             'about' => $portfolio->getAbout(),
             'about_custom_sections' => $portfolio->getAboutCustomSections()
         ]);
@@ -63,6 +64,7 @@ final class PortfolioController extends AbstractController
     public function showProject(Portfolio $portfolio): Response
     {
         return $this->render('project/show.html.twig',[
+            'portfolio' => $portfolio,
             'projects' => $portfolio->getProjects(),
         ]);
     }
@@ -71,6 +73,7 @@ final class PortfolioController extends AbstractController
     public function showExperience(Portfolio $portfolio): Response
     {
         return $this->render('experience/show.html.twig',[
+            'portfolio' => $portfolio,
             'experiences' => $portfolio->getExperiences(),
         ]);
     }
