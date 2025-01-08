@@ -10,4 +10,11 @@
     <a href="{{ path('app_login') }}" >login</a>
     <a href="{{ path('app_register') }}" >register</a>
 
+    {% for portfolio in portfolios %}
+        <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}">
+            <div>{{ portfolio.about.firstname }}</div>
+            <div>{{ portfolio.about.lastname }}</div>
+        </a>
+    {% endfor %}
+
 {% endblock %}
