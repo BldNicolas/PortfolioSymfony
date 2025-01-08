@@ -3,40 +3,17 @@
 {% block title %}About{% endblock %}
 
 {% block body %}
-    <h1>About</h1>
+    <div>
+        <div>{{ about.firstname }} {{ about.lastname }}</div>
+        <div>{{ about.dateOfBirth|date('d/m/Y') }}</div>
+        <div>{{ about.email }}</div>
+        <div>{{ about.address }}</div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ about.id }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ about.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ about.lastname }}</td>
-            </tr>
-            <tr>
-                <th>DateOfBirth</th>
-                <td>{{ about.dateOfBirth ? about.dateOfBirth|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ about.email }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ about.address }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_about_index') }}">back to list</a>
-
-    <a href="{{ path('app_about_edit', {'id': about.id}) }}">edit</a>
-
-    {{ include('about/_delete_form.html.twig') }}
+    <div>
+        {% for about_custom_section in about_custom_sections %}
+            <div>{{ about_custom_section.title }}</div>
+            <div>{{ about_custom_section.description }}</div>
+        {% endfor %}
+    </div>
 {% endblock %}

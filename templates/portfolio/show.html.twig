@@ -3,20 +3,14 @@
 {% block title %}Portfolio{% endblock %}
 
 {% block body %}
-    <h1>Portfolio</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ portfolio.id }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_portfolio_index') }}">back to list</a>
-
-    <a href="{{ path('app_portfolio_edit', {'id': portfolio.id}) }}">edit</a>
-
-    {{ include('portfolio/_delete_form.html.twig') }}
+    <div>
+        <h1>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</h1>
+    </div>
+    
+    <div>
+        <a href="{{ path('app_portfolio_about_show', {'id': portfolio.about.id}) }}">
+            <h2>À propos de moi</h2>
+            <h3>Qui suis-je ?</h3>
+        </a>
+    </div>
 {% endblock %}

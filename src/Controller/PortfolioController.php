@@ -50,6 +50,15 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/about', name: 'app_portfolio_about_show', methods: ['GET'])]
+    public function showAbout(Portfolio $portfolio): Response
+    {
+        return $this->render('about/show.html.twig',[
+            'about' => $portfolio->getAbout(),
+            'about_custom_sections' => $portfolio->getAboutCustomSections()
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_portfolio_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Portfolio $portfolio, EntityManagerInterface $entityManager): Response
     {
