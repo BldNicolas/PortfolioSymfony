@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\AboutCustomSection;
-use App\Entity\Experience;
+use App\Entity\About;
 use App\Entity\Portfolio;
-use App\Entity\Project;
-use App\Form\PortfolioType;
-use App\Repository\PortfolioRepository;
+use App\Form\AboutType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -30,32 +28,25 @@ final class PortfolioController extends AbstractController
         $portfolio = new Portfolio();
         $portfolio->setOwner($user);
 
-        $aboutCustomSection = new AboutCustomSection();
-        $aboutCustomSection->setPortfolio($portfolio);
-        $portfolio->addAboutCustomSection($aboutCustomSection);
+        $about = new About();
+        $about->setFirstname('');
+        $about->setLastname('');
+        $about->setDateOfBirth(new DateTime());
+        $about->setEmail('');
+        $about->setAddress('');
+        $about->setPortfolio($portfolio);
+        $portfolio->setAbout($about);
 
-        $project = new Project();
-        $project->setPortfolio($portfolio);
-        $portfolio->addProject($project);
+        $entityManager->persist($portfolio);
+        $entityManager->flush();
 
-        $experience = new Experience();
-        $experience->setPortfolio($portfolio);
-        $portfolio->addExperience($experience);
-
-        $form = $this->createForm(PortfolioType::class, $portfolio);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($portfolio);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_portfolio_show', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('portfolio/new.html.twig', [
-            'portfolio' => $portfolio,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute(
+            'portfolio_about_new', 
+            [
+                'portfolio' => $portfolio,
+                'id' => $portfolio->getId(),
+            ],
+            Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_portfolio_show', methods: ['GET'])]
@@ -73,6 +64,28 @@ final class PortfolioController extends AbstractController
             'portfolio' => $portfolio,
             'about' => $portfolio->getAbout(),
             'about_custom_sections' => $portfolio->getAboutCustomSections()
+        ]);
+    }
+
+    #[Route(path: '/{id}/about/new', name: 'portfolio_about_new', methods: ['GET', 'POST'])]
+    public function newAbout(Request $request, EntityManagerInterface $entityManager, Portfolio $portfolio): Response
+    {
+        $about = $portfolio->getAbout();
+        $about->setPortfolio($portfolio);
+
+        $form = $this->createForm(AboutType::class, $about);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($about);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_about_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('about/new.html.twig', [
+            'about' => $about,
+            'form' => $form,
         ]);
     }
 
