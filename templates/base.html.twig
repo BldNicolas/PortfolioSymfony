@@ -11,15 +11,17 @@
     </head>
     <body>
     {% block header %}
-        <nav>
-                <a href="{{ path('app_index') }}">Home</a>
-                <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}">Accueil</a>
-                <a href="{{ path('app_portfolio_about_show', {'id': portfolio.id}) }}">À propos</a>
-                <a href="{{ path('app_portfolio_project_show', {'id': portfolio.id}) }}">Projets</a>
-                <a href="{{ path('app_portfolio_experience_show', {'id': portfolio.id}) }}">Experience</a>
-        </nav>
+        {% if  portfolio is defined and portfolio.id is not null %}
+            <nav>
+                    <a href="{{ path('app_index') }}">Home</a>
+                    <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}">Accueil</a>
+                    <a href="{{ path('app_portfolio_about_show', {'id': portfolio.id}) }}">À propos</a>
+                    <a href="{{ path('app_portfolio_project_show', {'id': portfolio.id}) }}">Projets</a>
+                    <a href="{{ path('app_portfolio_experience_show', {'id': portfolio.id}) }}">Experience</a>
+            </nav>
+        {% endif %}
     {% endblock %}
-    
+
         <main>            
             {% block body %}
 
