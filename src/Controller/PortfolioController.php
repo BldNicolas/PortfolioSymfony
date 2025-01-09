@@ -57,7 +57,7 @@ final class PortfolioController extends AbstractController
             $entityManager->persist($portfolio);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_portfolio_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_portfolio_show', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('portfolio/new.html.twig', [
