@@ -16,10 +16,6 @@ class AboutCustomSectionType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('portfolio', EntityType::class, [
-                'class' => Portfolio::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

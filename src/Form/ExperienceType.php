@@ -22,10 +22,6 @@ class ExperienceType extends AbstractType
             ->add('endDate', null, [
                 'widget' => 'single_text',
             ])
-            ->add('portfolio', EntityType::class, [
-                'class' => Portfolio::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

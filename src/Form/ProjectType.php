@@ -21,10 +21,6 @@ class ProjectType extends AbstractType
             ->add('completedAt', null, [
                 'widget' => 'single_text',
             ])
-            ->add('portfolio', EntityType::class, [
-                'class' => Portfolio::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

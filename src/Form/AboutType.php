@@ -21,10 +21,6 @@ class AboutType extends AbstractType
             ])
             ->add('email')
             ->add('address')
-            ->add('portfolio', EntityType::class, [
-                'class' => Portfolio::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 
