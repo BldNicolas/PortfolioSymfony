@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Portfolio;
+use App\Entity\Project;
 use App\Form\PortfolioType;
 use App\Repository\PortfolioRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,7 +35,11 @@ final class PortfolioController extends AbstractController
     
         $portfolio = new Portfolio();
         $portfolio->setOwner($user);
-        
+
+        $project = new Project();
+        $project->setPortfolio($portfolio);
+        $portfolio->addProject($project);
+
         $form = $this->createForm(PortfolioType::class, $portfolio);
         $form->handleRequest($request);
 
