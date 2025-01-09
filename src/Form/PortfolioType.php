@@ -2,11 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\About;
 use App\Entity\Portfolio;
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,15 +12,15 @@ class PortfolioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('owner', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
-            ->add('about', EntityType::class, [
-                'class' => About::class,
-                'choice_label' => 'id',
-            ])
+    $builder
+        ->add('about', AboutType::class)
+        ->add('projects', CollectionType::class, [
+            'entry_type' => ProjectType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'data_class' => null,
+        ])
         ;
     }
 
