@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AboutCustomSection;
+use App\Entity\Experience;
 use App\Entity\Portfolio;
 use App\Entity\Project;
 use App\Form\PortfolioType;
@@ -44,6 +45,10 @@ final class PortfolioController extends AbstractController
         $project = new Project();
         $project->setPortfolio($portfolio);
         $portfolio->addProject($project);
+
+        $experience = new Experience();
+        $experience->setPortfolio($portfolio);
+        $portfolio->addExperience($experience);
 
         $form = $this->createForm(PortfolioType::class, $portfolio);
         $form->handleRequest($request);

@@ -28,6 +28,13 @@ class PortfolioType extends AbstractType
             'by_reference' => false,
             'data_class' => null,
         ])
+        ->add('experiences', CollectionType::class, [
+            'entry_type' => ExperienceType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'data_class' => null,
+        ])
         ;
     }
 

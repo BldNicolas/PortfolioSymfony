@@ -37,7 +37,7 @@ class Portfolio
     /**
      * @var Collection<int, Experience>
      */
-    #[ORM\OneToMany(targetEntity: Experience::class, mappedBy: 'portfolio')]
+    #[ORM\OneToMany(targetEntity: Experience::class, mappedBy: 'portfolio', cascade: ['persist', 'remove'])]
     private Collection $experiences;
 
     /**
