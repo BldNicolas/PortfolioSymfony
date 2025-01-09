@@ -25,7 +25,7 @@ class Portfolio
     /**
      * @var Collection<int, AboutCustomSection>
      */
-    #[ORM\OneToMany(targetEntity: AboutCustomSection::class, mappedBy: 'portfolio')]
+    #[ORM\OneToMany(targetEntity: AboutCustomSection::class, mappedBy: 'portfolio', cascade: ['persist', 'remove'])]
     private Collection $aboutCustomSection;
 
     /**

@@ -14,6 +14,13 @@ class PortfolioType extends AbstractType
     {
     $builder
         ->add('about', AboutType::class)
+        ->add('about_custom_section', CollectionType::class, [
+            'entry_type' => AboutCustomSectionType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'data_class' => null,
+        ])
         ->add('projects', CollectionType::class, [
             'entry_type' => ProjectType::class,
             'allow_add' => true,

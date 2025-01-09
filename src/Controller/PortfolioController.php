@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AboutCustomSection;
 use App\Entity\Portfolio;
 use App\Entity\Project;
 use App\Form\PortfolioType;
@@ -35,6 +36,10 @@ final class PortfolioController extends AbstractController
     
         $portfolio = new Portfolio();
         $portfolio->setOwner($user);
+
+        $aboutCustomSection = new AboutCustomSection();
+        $aboutCustomSection->setPortfolio($portfolio);
+        $portfolio->addAboutCustomSection($aboutCustomSection);
 
         $project = new Project();
         $project->setPortfolio($portfolio);
