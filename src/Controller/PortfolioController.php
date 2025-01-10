@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\About;
 use App\Entity\Portfolio;
+use App\Entity\Project;
 use App\Form\AboutType;
+use App\Form\ProjectType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -80,7 +83,7 @@ final class PortfolioController extends AbstractController
             $entityManager->persist($about);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_about_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('portfolio_projects_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('about/new.html.twig', [
@@ -95,6 +98,48 @@ final class PortfolioController extends AbstractController
         return $this->render('project/show.html.twig',[
             'portfolio' => $portfolio,
             'projects' => $portfolio->getProjects(),
+        ]);
+    }
+
+    #[Route(path: '/{id}/projects/edit', name: 'portfolio_projects_edit', methods: ['GET', 'POST'])]
+    public function editProjects(Request $request, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, Portfolio $portfolio): Response
+    {
+        $projects = $portfolio->getProjects();
+    
+        $newProject = new Project();
+        $newProject->setPortfolio($portfolio);
+        $newProjectForm = $formFactory->createNamed('new_project_form', ProjectType::class, $newProject);
+        $newProjectForm->handleRequest($request);
+    
+        if ($newProjectForm->isSubmitted() && $newProjectForm->isValid()) {
+            $entityManager->persist($newProject);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('portfolio_projects_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
+        }
+    
+        $editProjectForms = [];
+    
+        foreach ($projects as $project) {
+            $editProjectForm = $formFactory->createNamed('edit_form_' . $project->getId(), ProjectType::class, $project);
+            $editProjectForm->handleRequest($request);
+    
+            if ($editProjectForm->isSubmitted() && $editProjectForm->isValid()) {
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('portfolio_projects_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
+            }
+    
+            $editProjectForms[$project->getId()] = $editProjectForm;
+        }
+    
+        return $this->render('portfolio/projects_edit.html.twig', [
+            'portfolio' => $portfolio,
+            'projects' => $projects,
+            'newProjectForm' => $newProjectForm->createView(),
+            'editForms' => array_map(function ($form) {
+                return $form->createView();
+            }, $editProjectForms),
         ]);
     }
 

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Projects{% endblock %}
+
+{% block body %}
+    <h2>Add New Project</h2>
+    {{ form_start(newProjectForm) }}
+        {{ form_widget(newProjectForm) }}
+        <button type="submit">Add Project</button>
+    {{ form_end(newProjectForm) }}
+
+    <h2>Existing Projects</h2>
+    {% for project in projects %}
+        <div>
+            <h3>{{ project.title }}</h3>
+            {{ form_start(editForms[project.id]) }}
+                {{ form_widget(editForms[project.id]) }}
+                <button type="submit">Save Changes</button>
+            {{ form_end(editForms[project.id]) }}
+        </div>
+    {% endfor %}
+{% endblock %}
