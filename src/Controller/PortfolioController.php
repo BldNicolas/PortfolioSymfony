@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\About;
+use App\Entity\AboutCustomSection;
 use App\Entity\Portfolio;
 use App\Entity\Project;
+use App\Form\AboutCustomSectionType;
 use App\Form\AboutType;
 use App\Form\ProjectType;
 use DateTime;
@@ -71,24 +73,58 @@ final class PortfolioController extends AbstractController
     }
 
     #[Route(path: '/{id}/about/edit', name: 'portfolio_about_edit', methods: ['GET', 'POST'])]
-    public function editAbout(Request $request, EntityManagerInterface $entityManager, Portfolio $portfolio): Response
+    public function editAbout(Request $request, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, Portfolio $portfolio): Response
     {
         $about = $portfolio->getAbout();
         $about->setPortfolio($portfolio);
 
-        $form = $this->createForm(AboutType::class, $about);
-        $form->handleRequest($request);
+        $newAboutForm = $this->createForm(AboutType::class, $about);
+        $newAboutForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($newAboutForm->isSubmitted() && $newAboutForm->isValid()) {
             $entityManager->persist($about);
             $entityManager->flush();
 
             return $this->redirectToRoute('portfolio_projects_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
         }
 
+        $newAboutCustomSection = new AboutCustomSection();
+        $newAboutCustomSection->setPortfolio($portfolio);
+        $newAboutCustomSectionForm = $formFactory->createNamed('new_about_custom_section_form', AboutCustomSectionType::class, $newAboutCustomSection);
+        $newAboutCustomSectionForm->handleRequest($request);
+        
+        if ($newAboutCustomSectionForm->isSubmitted() && $newAboutCustomSectionForm->isValid()) { 
+            $entityManager->persist($newAboutCustomSection);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('portfolio_about_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        $editAboutCustomSectionForms = [];
+        $aboutCustomSections = $portfolio->getAboutCustomSection();
+
+        foreach ($aboutCustomSections as $aboutCustomSection) {
+            $editAboutCustomSectionForm = $formFactory->createNamed('edit_about_custom_section_' . $aboutCustomSection->getId() . '_form', AboutCustomSectionType::class, $aboutCustomSection);
+            $editAboutCustomSectionForm->handleRequest($request);
+
+            if ($editAboutCustomSectionForm->isSubmitted() && $editAboutCustomSectionForm->isValid()) {
+                $entityManager->flush();
+
+                return $this->redirectToRoute('portfolio_about_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
+            }
+
+            $editAboutCustomSectionForms[$aboutCustomSection->getId()] = $editAboutCustomSectionForm;
+        }
+
         return $this->render('portfolio/edit/about.html.twig', [
             'portfolio' => $portfolio,
-            'form' => $form,
+            'aboutCustomSections' => $aboutCustomSections,
+            'newAboutForm' => $newAboutForm->createView(),
+            'newAboutCustomSectionForm' => $newAboutCustomSectionForm->createView(),
+            'editAboutCustomSectionForms' => array_map(function ($form) {
+                return $form->createView();
+            }, $editAboutCustomSectionForms),
+
         ]);
     }
 

@@ -8,12 +8,33 @@
     </nav>
 {% endblock %}
 
-{% block title %}New About{% endblock %}
+{% block title %}About{% endblock %}
 
 {% block body %}
-    <h1>Create new About</h1>
+    <h1>About</h1>
 
-    {{ include('about/_form.html.twig') }}
+    {{ form_start(newAboutForm) }}
+        {{ form_widget(newAboutForm) }}
+        <button type="submit">Save About</button>
+    {{ form_end(newAboutForm) }}
+
+    <h2>About Custom Section</h2>
+
+    {{ form_start(newAboutCustomSectionForm) }}
+        {{ form_widget(newAboutCustomSectionForm) }}
+        <button type="submit">Add About custom section</button>
+    {{ form_end(newAboutCustomSectionForm) }}
+
+    <h2>Existing Custom Section</h2>
+    {% for aboutCustomSection in aboutCustomSections %}
+        <div>
+            <h3>{{ aboutCustomSection.title }}</h3>
+            {{ form_start(editAboutCustomSectionForms[aboutCustomSection.id]) }}
+                {{ form_widget(editAboutCustomSectionForms[aboutCustomSection.id]) }}
+                <button type="submit">Save About custom section</button>
+            {{ form_end(editAboutCustomSectionForms[aboutCustomSection.id]) }}
+        </div>
+    {% endfor %}
 
     <a href="{{ path('app_about_index') }}">back to list</a>
 {% endblock %}
