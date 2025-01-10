@@ -1,0 +1,10 @@
+.btn{
+    display: flex;
+    border-radius: 10px;
+    background-color: var(--mint-cream);
+    padding: 0 10px 0 10px;
+    color: var(--dark-slate-grey);
+}
+.btn:hover{
+    background-color: var(--cambridge-blue);
+}
