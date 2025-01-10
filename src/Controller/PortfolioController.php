@@ -44,7 +44,7 @@ final class PortfolioController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute(
-            'portfolio_about_new', 
+            'portfolio_about_edit', 
             [
                 'portfolio' => $portfolio,
                 'id' => $portfolio->getId(),
@@ -70,8 +70,8 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/about/new', name: 'portfolio_about_new', methods: ['GET', 'POST'])]
-    public function newAbout(Request $request, EntityManagerInterface $entityManager, Portfolio $portfolio): Response
+    #[Route(path: '/{id}/about/edit', name: 'portfolio_about_edit', methods: ['GET', 'POST'])]
+    public function editAbout(Request $request, EntityManagerInterface $entityManager, Portfolio $portfolio): Response
     {
         $about = $portfolio->getAbout();
         $about->setPortfolio($portfolio);
@@ -87,7 +87,7 @@ final class PortfolioController extends AbstractController
         }
 
         return $this->render('about/new.html.twig', [
-            'about' => $about,
+            'portfolio' => $portfolio,
             'form' => $form,
         ]);
     }
