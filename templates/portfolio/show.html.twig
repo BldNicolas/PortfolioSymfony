@@ -1,22 +1,30 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('styles/portfolio.css') }}">
+{% endblock %}
+
+{% block header %}
+    
+{% endblock %}
+
 {% block title %}Portfolio{% endblock %}
 
 {% block body %}
-    <div>
-        <h1>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</h1>
+    <div class="welcome-container" style="background-image: url({{ asset('images/mainPageBackGround.png') }});">
+        <h1 class="welcome-text">Découvrez {{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</h1>
     </div>
 
-    <div>
-        <a href="{{ path('app_portfolio_about_show', {'id': portfolio.id}) }}">
+    <div class="content-container">
+        <a href="{{ path('app_portfolio_about_show', {'id': portfolio.id}) }}" class="card">
             <h2>À propos de moi</h2>
             <h3>Qui suis-je ?</h3>
         </a>
-        <a href="{{ path('app_portfolio_project_show', {'id': portfolio.id}) }}">
+        <a href="{{ path('app_portfolio_project_show', {'id': portfolio.id}) }}" class="card">
             <h2>Projets</h2>
             <h3>Qu'ai-je fais ?</h3>
         </a>
-        <a href="{{ path('app_portfolio_experience_show', {'id': portfolio.id}) }}">
+        <a href="{{ path('app_portfolio_experience_show', {'id': portfolio.id}) }}" class="card">
             <h2>Experience</h2>
             <h3>Où ai-je appris ?</h3>
         </a>

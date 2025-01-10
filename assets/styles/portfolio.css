@@ -1,0 +1,35 @@
+.welcome-container{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.welcome-text{
+    padding: 0px 10px;
+    background-color: var(--eerie-black-50);
+    color: var(--mint-cream);
+    border-radius: 25px;
+}
+
+.content-container{
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.card{
+    min-height: 150px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--mint-cream);
+    border-radius: 25px;
+}
