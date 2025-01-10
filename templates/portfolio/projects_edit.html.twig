@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    <nav>
+        <a href="{{ path('portfolio_about_edit', {'id': portfolio.id}) }}">À propos</a>
+        <a href="{{ path('portfolio_projects_edit', {'id': portfolio.id}) }}">Projets</a>
+        {# <a href="{{ path('portfolio_experiences_edit', {'id': portfolio.id}) }}">Experience</a> #}
+    </nav>
+{% endblock %}
+
 {% block title %}Edit Projects{% endblock %}
 
 {% block body %}
