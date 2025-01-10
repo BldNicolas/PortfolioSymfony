@@ -1,0 +1,11 @@
+:root {
+    --eerie-black: rgba(18, 32, 33, 1);
+    --eerie-black-50: rgba(18, 32, 33, 0.5);
+    --dark-slate-grey: rgba(56, 73, 71, 1);
+    --feldgrau: rgba(82, 107, 96, 1);
+    --cambridge-blue: rgba(150, 196, 160, 1);
+    --mint-cream: rgba(222, 232, 224);
+    --black: rgba(0, 0, 0, 1);
+    --white: rgba(255, 255, 255, 1);
+  }
+  
