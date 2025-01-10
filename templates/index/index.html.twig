@@ -4,23 +4,43 @@
     {% block importmap %}{{ importmap('app') }}{% endblock %}
 {% endblock %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('styles/index.css') }}">
+{% endblock %}
+
 {% block header %}
     
 {% endblock %}
 
 
 {% block body %}
-    <div class="welcome" style="background-image: url('{{ asset('images/mainPageBackGround.png') }}');"></div>
-    <a href="{{ path('app_login') }}" >login</a>
-    <a href="{{ path('app_register') }}" >register</a>
+    <div class="container">
 
-    {% for portfolio in portfolios %}
-        <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}">
-            <div>{{ portfolio.about.firstname }}</div>
-            <div>{{ portfolio.about.lastname }}</div>
-        </a>
-    {% endfor %}
+        <div class="content-container">
+            <h2>Visiter des Portfolio :</h2>
+            <div class="portfolios-container">
+                {% for portfolio in portfolios %}
+                    <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}" class="portfolio-container">
+                        <div class="logo-container">{{ portfolio.about.firstname|slice(0, 1) }} {{ portfolio.about.lastname|slice(0, 1) }}</div>
+                        <p>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</p>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
 
-    <a href="{{ path('app_portfolio_new') }}">Créer un nouveau portfolio</a>
+        <div class="footer-container">
+            {% if app.user is not null %}
+                <a href="{{ path('app_portfolio_new') }}" class="btn">Créer un nouveau portfolio</a>
+                <a href="{{ path('app_logout') }}" class="btn">Se déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="btn">
+                    <h2>Se connecter</h2>
+                </a>
+                <a href="{{ path('app_register') }}" class="btn">
+                    <h2>S'inscrire</h2>
+                </a>
+            {% endif %}
+        </div>
 
+    </div>
 {% endblock %}
