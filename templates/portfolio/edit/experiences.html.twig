@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <nav>
+        <a href="{{ path('portfolio_about_edit', {'id': portfolio.id}) }}">À propos</a>
+        <a href="{{ path('portfolio_projects_edit', {'id': portfolio.id}) }}">Projets</a>
+        <a href="{{ path('portfolio_experiences_edit', {'id': portfolio.id}) }}">Experience</a>
+    </nav>
+{% endblock %}
+
+{% block title %}Edit Experiences{% endblock %}
+
+{% block body %}
+    <h2>Add New Experience</h2>
+    {{ form_start(newExperienceForm) }}
+        {{ form_widget(newExperienceForm) }}
+        <button type="submit">Add Experience</button>
+    {{ form_end(newExperienceForm) }}
+
+    <h2>Existing Experiences</h2>
+    {% for experience in experiences %}
+        <div>
+            <h3>{{ experience.title }}</h3>
+            {{ form_start(editExperienceForms[experience.id]) }}
+                {{ form_widget(editExperienceForms[experience.id]) }}
+                <button type="submit">Save Changes</button>
+            {{ form_end(editExperienceForms[experience.id]) }}
+        </div>
+    {% endfor %}
+{% endblock %}

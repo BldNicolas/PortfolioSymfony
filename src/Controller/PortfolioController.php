@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\About;
 use App\Entity\AboutCustomSection;
+use App\Entity\Experience;
 use App\Entity\Portfolio;
 use App\Entity\Project;
 use App\Form\AboutCustomSectionType;
 use App\Form\AboutType;
+use App\Form\ExperienceType;
 use App\Form\ProjectType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -187,6 +189,49 @@ final class PortfolioController extends AbstractController
             'experiences' => $portfolio->getExperiences(),
         ]);
     }
+
+    #[Route(path: '/{id}/experiences/edit', name: 'portfolio_experiences_edit', methods: ['GET', 'POST'])]
+    public function editExperiences(Request $request, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, Portfolio $portfolio): Response
+    {
+        $experiences = $portfolio->getExperiences();
+    
+        $newExperience = new Experience();
+        $newExperience->setPortfolio($portfolio);
+        $newExperienceForm = $formFactory->createNamed('new_experience_form', ExperienceType::class, $newExperience);
+        $newExperienceForm->handleRequest($request);
+    
+        if ($newExperienceForm->isSubmitted() && $newExperienceForm->isValid()) {
+            $entityManager->persist($newExperience);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('portfolio_experiences_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
+        }
+    
+        $editExperienceForms = [];
+    
+        foreach ($experiences as $experience) {
+            $editExperienceForm = $formFactory->createNamed('edit_form_' . $experience->getId(), ExperienceType::class, $experience);
+            $editExperienceForm->handleRequest($request);
+    
+            if ($editExperienceForm->isSubmitted() && $editExperienceForm->isValid()) {
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('portfolio_experiences_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
+            }
+    
+            $editExperienceForms[$experience->getId()] = $editExperienceForm;
+        }
+    
+        return $this->render('portfolio/edit/experiences.html.twig', [
+            'portfolio' => $portfolio,
+            'experiences' => $experiences,
+            'newExperienceForm' => $newExperienceForm->createView(),
+            'editExperienceForms' => array_map(function ($form) {
+                return $form->createView();
+            }, $editExperienceForms),
+        ]);
+    }
+
 
     #[Route('/{id}', name: 'app_portfolio_delete', methods: ['POST'])]
     public function delete(Request $request, Portfolio $portfolio, EntityManagerInterface $entityManager): Response
