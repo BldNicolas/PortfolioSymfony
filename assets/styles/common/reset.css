@@ -8,7 +8,7 @@ body{
     line-height: 1.6;
     letter-spacing: 0rem;
     background-color: var(--eerie-black);
-    color: var(--mint-cream);
+    color: var(--dark-slate-grey);
 }
 *{
     box-sizing: border-box;
@@ -20,7 +20,11 @@ h1,h2,h3,h4,p,ul,ol{
     font-weight: 300;
 }
 a{
+    color: inherit;
     text-decoration: none;
+}
+a:visited {
+    color: inherit;
 }
 button, input{
     padding: 0;
