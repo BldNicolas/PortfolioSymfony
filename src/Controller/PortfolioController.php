@@ -85,7 +85,7 @@ final class PortfolioController extends AbstractController
             $entityManager->persist($about);
             $entityManager->flush();
 
-            return $this->redirectToRoute('portfolio_projects_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('portfolio_about_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $newAboutCustomSection = new AboutCustomSection();
