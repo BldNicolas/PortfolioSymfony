@@ -27,4 +27,5 @@
             {{ form_end(editExperienceForms[experience.id]) }}
         </div>
     {% endfor %}
+    <a href="{{ path('app_portfolio_show', {'id': portfolio.id})}}">Afficher le portfolio</a>
 {% endblock %}

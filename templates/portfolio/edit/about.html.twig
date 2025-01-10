@@ -35,6 +35,6 @@
             {{ form_end(editAboutCustomSectionForms[aboutCustomSection.id]) }}
         </div>
     {% endfor %}
-
-    <a href="{{ path('app_about_index') }}">back to list</a>
+    <a href="{{ path('app_portfolio_show', {'id': portfolio.id})}}">Afficher le portfolio</a>
+    <a href="{{ path('portfolio_projects_edit', {'id': portfolio.id})}}">Suivant</a>
 {% endblock %}
