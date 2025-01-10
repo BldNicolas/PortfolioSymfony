@@ -86,7 +86,7 @@ final class PortfolioController extends AbstractController
             return $this->redirectToRoute('portfolio_projects_edit', ['id' => $portfolio->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('about/new.html.twig', [
+        return $this->render('portfolio/edit/about.html.twig', [
             'portfolio' => $portfolio,
             'form' => $form,
         ]);
@@ -133,7 +133,7 @@ final class PortfolioController extends AbstractController
             $editProjectForms[$project->getId()] = $editProjectForm;
         }
     
-        return $this->render('portfolio/projects_edit.html.twig', [
+        return $this->render('portfolio/edit/projects.html.twig', [
             'portfolio' => $portfolio,
             'projects' => $projects,
             'newProjectForm' => $newProjectForm->createView(),

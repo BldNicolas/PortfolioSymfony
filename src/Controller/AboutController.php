@@ -36,7 +36,7 @@ final class AboutController extends AbstractController
             return $this->redirectToRoute('app_about_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('about/new.html.twig', [
+        return $this->render('portfolio/edit/about.html.twig', [
             'about' => $about,
             'form' => $form,
         ]);
