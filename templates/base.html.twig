@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ asset('styles/common/text.css') }}">
         <link rel="stylesheet" href="{{ asset('styles/common/variable.css') }}">
         <link rel="stylesheet" href="{{ asset('styles/common/button.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/common/header.css') }}">
         {% block stylesheet %}
             
         {% endblock %}
@@ -15,12 +16,12 @@
     <body>
     {% block header %}
         {% if  portfolio is defined and portfolio.id is not null %}
-            <nav>
-                    <a href="{{ path('app_index') }}">Home</a>
-                    <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}">Accueil</a>
-                    <a href="{{ path('app_portfolio_about_show', {'id': portfolio.id}) }}">À propos</a>
-                    <a href="{{ path('app_portfolio_project_show', {'id': portfolio.id}) }}">Projets</a>
-                    <a href="{{ path('app_portfolio_experience_show', {'id': portfolio.id}) }}">Experience</a>
+            <nav class="header-container">
+                <a href="{{ path('app_index') }}" class="{{ app.request.attributes.get('_route') == 'app_index' ? 'active' : '' }}">Home</a>
+                <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}" class="{{ app.request.attributes.get('_route') == 'app_portfolio_show' ? 'active' : '' }}">Accueil</a>
+                <a href="{{ path('app_portfolio_about_show', {'id': portfolio.id}) }}" class="{{ app.request.attributes.get('_route') == 'app_portfolio_about_show' ? 'active' : '' }}">À propos</a>
+                <a href="{{ path('app_portfolio_project_show', {'id': portfolio.id}) }}" class="{{ app.request.attributes.get('_route') == 'app_portfolio_project_show' ? 'active' : '' }}">Projet</a>
+                <a href="{{ path('app_portfolio_experience_show', {'id': portfolio.id}) }}" class="{{ app.request.attributes.get('_route') == 'app_portfolio_experience_show' ? 'active' : '' }}">Experience</a>
             </nav>
         {% endif %}
     {% endblock %}

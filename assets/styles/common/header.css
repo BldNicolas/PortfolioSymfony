@@ -1,0 +1,13 @@
+.header-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: var(--dark-slate-grey);
+    color: var(--mint-cream);
+}
+
+.active{
+    font-size: 36px;
+}
