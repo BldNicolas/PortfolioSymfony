@@ -1,19 +1,34 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('styles/about.css') }}">
+{% endblock %}
+
 {% block title %}About{% endblock %}
 
 {% block body %}
-    <div>
-        <div>{{ about.firstname }} {{ about.lastname }}</div>
-        <div>{{ about.dateOfBirth|date('d/m/Y') }}</div>
-        <div>{{ about.email }}</div>
-        <div>{{ about.address }}</div>
-    </div>
+    <div class="content-container">
+        <div class="about-container">
+            <h2 class="about-title">{{ about.firstname }} {{ about.lastname }}</h2>
+            <div class="about-contents-container">
+                <i class="about-picture fa-regular fa-user"></i>
+                <div class="about-content-container">
+                    <div><i class="fa-solid fa-calendar-days"></i> {{ about.dateOfBirth|date('d/m/Y') }}</div>
+                    <div><i class="fa-solid fa-at"></i> {{ about.email }}</div>
+                    <div><i class="fa-solid fa-house-user"></i> {{ about.address }}</div>
+                </div>
+            </div>
+        </div>
 
-    <div>
         {% for about_custom_section in about_custom_sections %}
-            <div>{{ about_custom_section.title }}</div>
-            <div>{{ about_custom_section.description }}</div>
+            <div class="about-container">
+                <h2 class="about-title">{{ about_custom_section.title }}</h2>
+                <div class="about-contents-container">
+                    <div class="about-content-container">
+                        <div>{{ about_custom_section.description }}</div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
