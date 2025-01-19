@@ -76,6 +76,8 @@ final class ProjectController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_project_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('portfolio_projects_edit', [
+            'id' => $project->getPortfolio()->getId(),
+        ], Response::HTTP_SEE_OTHER);
     }
 }

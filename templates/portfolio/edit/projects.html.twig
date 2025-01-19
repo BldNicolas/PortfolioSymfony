@@ -26,6 +26,10 @@
                 {{ form_widget(editForms[project.id]) }}
                 <button type="submit">Save Changes</button>
             {{ form_end(editForms[project.id]) }}
+            <form method="post" action="{{ path('app_project_delete', {'id': project.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                <button class="btn">Delete</button>
+            </form>
         </div>
     {% endfor %}
     <a href="{{ path('app_portfolio_show', {'id': portfolio.id})}}">Afficher le portfolio</a>
