@@ -1,14 +1,30 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('styles/experience.css') }}">
+{% endblock %}
+
 {% block title %}Experience{% endblock %}
 
 {% block body %}
-    {% for experience in experiences %}
-        <div>
-            <div>{{ experience.title }}</div>
-            <div>{{ experience.description }}</div>
-            <div>{{ experience.startDate|date('d/m/Y') }}</div>
-            <div>{{ experience.endDate|date('d/m/Y') }}</div>
-        </div>
-    {% endfor %}
+    <div class="content-container">
+        {% if experiences[0] is defined %}
+            {% for experience in experiences %}
+                <div class="experience-container">
+                    <h2 class="experience-title">{{ experience.title }}</h2>
+                    <div class="experience-contents-container">
+                        <div class="experience-content-left-section">
+                            <div class="content-card"><i class="fa-regular fa-calendar"></i> {{ experience.startDate|date('d/m/Y') }}</div>
+                            <div class="content-card"><i class="fa-regular fa-calendar"></i> {{ experience.endDate|date('d/m/Y') }}</div>
+                        </div>
+                        <div class="experience-content-description">{{ experience.description }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="experience-container">
+                Il n'y a pas d'experiences dans ce Portfolio
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
