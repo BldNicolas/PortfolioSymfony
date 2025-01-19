@@ -2,6 +2,7 @@
 
 {% block header %}
     <nav>
+        <a href="{{ path('app_index') }}" class="{{ app.request.attributes.get('_route') == 'app_index' ? 'active' : '' }}">Home</a>
         <a href="{{ path('portfolio_about_edit', {'id': portfolio.id}) }}">À propos</a>
         <a href="{{ path('portfolio_projects_edit', {'id': portfolio.id}) }}">Projets</a>
         <a href="{{ path('portfolio_experiences_edit', {'id': portfolio.id}) }}">Experience</a>
