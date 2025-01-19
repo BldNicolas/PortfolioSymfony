@@ -31,3 +31,6 @@ button, input{
     background: none;
     border: 0;
 }
+input{
+    background-color: var(--mint-cream);
+}
