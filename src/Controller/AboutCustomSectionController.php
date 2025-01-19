@@ -76,6 +76,8 @@ final class AboutCustomSectionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_about_custom_section_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('portfolio_about_edit', [
+            'id' => $aboutCustomSection->getPortfolio()->getId(),
+        ], Response::HTTP_SEE_OTHER);
     }
 }
