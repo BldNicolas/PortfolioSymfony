@@ -17,13 +17,28 @@
     <div class="container">
 
         <div class="content-container">
+        {% if app.user is not null %}
+            <h2>Vos portfolio(s) :</h2>
+            <div class="portfolios-container">
+                {% for portfolio in portfolios %}
+                    {% if portfolio.owner.id == app.user.id %}
+                        <a href="{{ path('portfolio_about_edit', {'id': portfolio.id}) }}" class="portfolio-container">
+                            <div class="logo-container">{{ portfolio.about.firstname|slice(0, 1) }} {{ portfolio.about.lastname|slice(0, 1) }}</div>
+                            <p>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</p>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
             <h2>Visiter des Portfolio :</h2>
             <div class="portfolios-container">
                 {% for portfolio in portfolios %}
-                    <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}" class="portfolio-container">
-                        <div class="logo-container">{{ portfolio.about.firstname|slice(0, 1) }} {{ portfolio.about.lastname|slice(0, 1) }}</div>
-                        <p>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</p>
-                    </a>
+                    {% if app.user.id is not defined or portfolio.owner.id != app.user.id %}
+                        <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}" class="portfolio-container">
+                            <div class="logo-container">{{ portfolio.about.firstname|slice(0, 1) }} {{ portfolio.about.lastname|slice(0, 1) }}</div>
+                            <p>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</p>
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
