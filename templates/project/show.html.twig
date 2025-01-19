@@ -1,15 +1,33 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('styles/project.css') }}">
+{% endblock %}
+
 {% block title %}Projects{% endblock %}
 
 {% block body %}
-    {% for project in projects %}
-        <div>
-            <div>{{ project.title }}</div>
-            <div>{{ project.description }}</div>
-            <div>{{ project.technologies }}</div>
-            <div>{{ project.duration }}</div>
-            <div>{{ project.completedAt|date('d/m/Y') }}</div>
-        </div>
-    {% endfor %}
+    <div class="content-container">
+        {% if projects[0] is defined %}
+            {% for project in projects %}
+                <div class="project-container">
+                    <h2 class="project-title">{{ project.title }}</h2>
+                    <div class="project-contents-container">
+                        <div class="project-content-container">
+                            <div class="project-content-left-section">
+                                <div class="content-card"><i class="fa-solid fa-toolbox"></i> {{ project.technologies }}</div>
+                                <div class="content-card"><i class="fa-regular fa-clock"></i> {{ project.duration }}</div>
+                                <div class="content-card"><i class="fa-regular fa-calendar"></i> {{ project.completedAt|date('d/m/Y') }}</div>
+                            </div>
+                            <div class="project-content-description">{{ project.description }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="project-container">
+                Il n'y a pas de projet dans ce portfolio
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
