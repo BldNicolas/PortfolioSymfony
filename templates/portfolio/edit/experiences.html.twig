@@ -26,6 +26,10 @@
                 {{ form_widget(editExperienceForms[experience.id]) }}
                 <button type="submit">Save Changes</button>
             {{ form_end(editExperienceForms[experience.id]) }}
+            <form method="post" action="{{ path('app_experience_delete', {'id': experience.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ experience.id) }}">
+                <button class="btn">Delete</button>
+            </form>
         </div>
     {% endfor %}
     <a href="{{ path('app_portfolio_show', {'id': portfolio.id})}}">Afficher le portfolio</a>

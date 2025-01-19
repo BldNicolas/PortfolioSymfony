@@ -76,6 +76,8 @@ final class ExperienceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_experience_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('portfolio_experiences_edit', [
+            'id' => $experience->getPortfolio()->getId(),
+        ], Response::HTTP_SEE_OTHER);
     }
 }
