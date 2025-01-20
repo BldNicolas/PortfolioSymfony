@@ -83,11 +83,10 @@ final class PortfolioController extends AbstractController
         Portfolio $portfolio,
         Security $security
     ): Response {
-        $user = $security->getUser();
-        if ($portfolio->getOwner() !== $user) {
+        $user = $security->getUser();        
+        if (!in_array("ROLE_ADMIN", $user->getRoles()) && $portfolio->getOwner() !== $user) {
             throw new AccessDeniedHttpException("Vous n'avez pas la permission d'accéder à cette page.");
         }
-
         $about = $portfolio->getAbout();
         $about->setPortfolio($portfolio);
 

@@ -30,6 +30,7 @@
 }
 
 .portfolio-container{
+    position: relative;
     min-width: 175px;
     min-height: 125px;
     padding: 10px;
@@ -42,6 +43,32 @@
 }
 .portfolio-container:hover{
     border: 1px solid var(--dark-slate-grey);
+}
+
+.edit-icon {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mint-cream);
+    border-radius: 50%;
+    color: var(--dark-slate-grey);
+    font-size: 14px;
+}
+
+.edit-icon:hover {
+    border: 1px solid var(--dark-slate-grey);
+}
+
+.portfolio-content-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .logo-container{

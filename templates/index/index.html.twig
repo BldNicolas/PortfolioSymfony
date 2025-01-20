@@ -34,10 +34,17 @@
             <div class="portfolios-container">
                 {% for portfolio in portfolios %}
                     {% if app.user.id is not defined or portfolio.owner.id != app.user.id %}
-                        <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}" class="portfolio-container">
+                    <div class="portfolio-container">
+                        <a href="{{ path('app_portfolio_show', {'id': portfolio.id}) }}" class="portfolio-content-container">
                             <div class="logo-container">{{ portfolio.about.firstname|slice(0, 1) }} {{ portfolio.about.lastname|slice(0, 1) }}</div>
                             <p>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</p>
                         </a>
+                        {% if app.user.roles[1] == "ROLE_ADMIN" %}
+                            <a href="{{ path('portfolio_about_edit', {'id': portfolio.id}) }}" class="edit-icon">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                        {% endif %}
+                    </div>
                     {% endif %}
                 {% endfor %}
             </div>
