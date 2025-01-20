@@ -39,7 +39,7 @@
                             <div class="logo-container">{{ portfolio.about.firstname|slice(0, 1) }} {{ portfolio.about.lastname|slice(0, 1) }}</div>
                             <p>{{ portfolio.about.firstname }} {{ portfolio.about.lastname }}</p>
                         </a>
-                        {% if app.user.roles[1] == "ROLE_ADMIN" %}
+                        {% if app.user.roles is defined and app.user.roles[1] == "ROLE_ADMIN" %}
                             <a href="{{ path('portfolio_about_edit', {'id': portfolio.id}) }}" class="edit-icon">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
