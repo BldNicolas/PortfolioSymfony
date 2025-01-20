@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 #[Route('/portfolio')]
 final class PortfolioController extends AbstractController
@@ -75,8 +76,18 @@ final class PortfolioController extends AbstractController
     }
 
     #[Route(path: '/{id}/about/edit', name: 'portfolio_about_edit', methods: ['GET', 'POST'])]
-    public function editAbout(Request $request, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, Portfolio $portfolio): Response
-    {
+    public function editAbout(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        FormFactoryInterface $formFactory,
+        Portfolio $portfolio,
+        Security $security
+    ): Response {
+        $user = $security->getUser();
+        if ($portfolio->getOwner() !== $user) {
+            throw new AccessDeniedHttpException("Vous n'avez pas la permission d'accéder à cette page.");
+        }
+
         $about = $portfolio->getAbout();
         $about->setPortfolio($portfolio);
 
@@ -140,8 +151,17 @@ final class PortfolioController extends AbstractController
     }
 
     #[Route(path: '/{id}/projects/edit', name: 'portfolio_projects_edit', methods: ['GET', 'POST'])]
-    public function editProjects(Request $request, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, Portfolio $portfolio): Response
-    {
+    public function editProjects(Request $request,
+        EntityManagerInterface $entityManager,
+        FormFactoryInterface $formFactory,
+        Portfolio $portfolio,
+        Security $security
+    ): Response {
+        $user = $security->getUser();
+        if ($portfolio->getOwner() !== $user) {
+            throw new AccessDeniedHttpException("Vous n'avez pas la permission d'accéder à cette page.");
+        }
+
         $projects = $portfolio->getProjects();
     
         $newProject = new Project();
@@ -191,8 +211,17 @@ final class PortfolioController extends AbstractController
     }
 
     #[Route(path: '/{id}/experiences/edit', name: 'portfolio_experiences_edit', methods: ['GET', 'POST'])]
-    public function editExperiences(Request $request, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, Portfolio $portfolio): Response
-    {
+    public function editExperiences(Request $request,
+        EntityManagerInterface $entityManager,
+        FormFactoryInterface $formFactory,
+        Portfolio $portfolio,
+        Security $security
+    ): Response {
+        $user = $security->getUser();
+        if ($portfolio->getOwner() !== $user) {
+            throw new AccessDeniedHttpException("Vous n'avez pas la permission d'accéder à cette page.");
+        }
+
         $experiences = $portfolio->getExperiences();
     
         $newExperience = new Experience();
